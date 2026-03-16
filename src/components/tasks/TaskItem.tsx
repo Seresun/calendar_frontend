@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Task } from '../../types/Task';
-import { TaskCard, TaskText } from './TaskItem.styles';
+import { TaskCard, TaskText, DeleteButton } from './TaskItem.styles';
 import { TaskInlineEditor } from './TaskInlineEditor';
 
 interface TaskItemProps {
@@ -47,10 +47,6 @@ export function TaskItem({
       draggable
       $isDragging={isDragging}
       onDoubleClick={() => setIsEditing(true)}
-      onContextMenu={event => {
-        event.preventDefault();
-        onDelete(task.id);
-      }}
       onDragStart={event => {
         event.dataTransfer.effectAllowed = 'move';
         const payload = `${task.id}:${date}:${index}`;
@@ -63,6 +59,17 @@ export function TaskItem({
         onDragEnd();
       }}
     >
+      <DeleteButton
+        type="button"
+        aria-label="Delete task"
+        title="Delete task"
+        onClick={event => {
+          event.stopPropagation();
+          onDelete(task.id);
+        }}
+      >
+        ×
+      </DeleteButton>
       <TaskText>{task.text}</TaskText>
     </TaskCard>
   );

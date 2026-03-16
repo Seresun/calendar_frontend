@@ -7,9 +7,11 @@ import { DayCell } from './DayCell';
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-auto-rows: 140px;
-  gap: 0;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  grid-auto-rows: 150px;
+  gap: 1px;
+  background: ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radius.md};
+  overflow: hidden;
 `;
 
 const WeekdayRow = styled.div`
@@ -18,10 +20,13 @@ const WeekdayRow = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing(1)};
   font-size: 11px;
   color: ${({ theme }) => theme.colors.textMuted};
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 `;
 
 const WeekdayCell = styled.div`
   text-align: left;
+  padding: 0 ${({ theme }) => theme.spacing(1)};
 `;
 
 const weekdayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];

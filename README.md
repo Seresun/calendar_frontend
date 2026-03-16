@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+## Calendar Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Этот пакет отвечает за интерфейс календаря с задачами и праздниками.  
+Фронтенд написан на React + TypeScript и собирается через Vite, стили оформлены в стиле Trello‑подобного календаря.
 
-Currently, two official plugins are available:
+### Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Просмотр месяца в виде календарной сетки.
+- Отображение задач по дням с поддержкой drag and drop.
+- Инлайн‑редактирование текста задачи по двойному клику.
+- Удаление задачи через маленький крестик в правом верхнем углу карточки.
+- Отображение государственных праздников, загружаемых из backend‑API.
+- Поиск по задачам.
 
-## React Compiler
+### Требования
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 18+.
+- Работающий backend этого проекта (см. `backend/`).
 
-## Expanding the ESLint configuration
+### Установка и запуск
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Приложение по умолчанию поднимается на `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Настройка окружения
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Фронтенд обращается к backend через Axios‑клиент.
+
+- По умолчанию используется продакшн‑адрес:
+
+```ts
+// src/api/client.ts
+const baseURL =
+  import.meta.env.VITE_API_URL || 'https://calendar-backend-wx4e.onrender.com/';
 ```
+
+- Для работы с локальным сервером можно создать файл `.env` в каталоге `frontend` и задать:
+
+```bash
+VITE_API_URL=http://localhost:3001
+```
+
+После изменения переменных окружения перезапустите `npm run dev`.
+
+### Основные скрипты
+
+- `npm run dev` — запуск Vite‑dev‑сервера.
+- `npm run build` — типизация и продакшн‑сборка.
+- `npm run preview` — превью собранного фронтенда.
+- `npm run lint` — запуск ESLint.
+
+### Структура
+
+- `src/components/calendar` — компоненты календаря (шапка, сетка, ячейка дня).
+- `src/components/tasks` — представление задач и инлайн‑редактор.
+- `src/hooks` — бизнес‑логика работы с датами, задачами и drag and drop.
+- `src/api` — HTTP‑клиент и функции обращения к backend.
+- `src/styles` — тема и глобальные стили.
+
+### Деплой
+
+Фронтенд можно деплоить на любой статический хостинг (например, Vercel).  
+В продакшне важно указать корректный `VITE_API_URL`, указывающий на развернутый backend.
+

@@ -2,8 +2,6 @@ import styled from '@emotion/styled';
 
 export const Cell = styled.div<{ $isToday: boolean; $isCurrentMonth: boolean }>`
   background: ${({ theme }) => theme.colors.surface};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 0;
   padding: ${({ theme }) => theme.spacing(2)};
   display: flex;
   flex-direction: column;
@@ -40,7 +38,8 @@ export const TasksContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1)};
-  overflow: hidden;
+  max-height: 100%;
+  overflow-y: auto;
 `;
 
 export const AddButton = styled.button`
